@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>McDonald’s Garhoud – FAHU Control Optimization Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-soft: #111827;
+      --card: #020617;
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.12);
+      --accent2: #38bdf8;
+      --text-main: #e5e7eb;
+      --text-soft: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.25);
+      --danger: #f97373;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 45%);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 16px 56px;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+
+    .logo-block {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    h1 {
+      font-size: clamp(24px, 3vw, 30px);
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-soft);
+      margin-top: 4px;
+      max-width: 520px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .tag {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      color: var(--text-soft);
+    }
+
+    .tag--accent {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: radial-gradient(circle at top left, #0f172a 0, #020617 55%);
+      border-radius: 18px;
+      border: 1px solid var(--border-subtle);
+      padding: 18px 18px 20px;
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.75);
+      position: relative;
+      overflow: hidden;
+    }
+
+    canvas {
+      width: 100% !important;
+      max-height: 280px;
+    }
+
+    .footnote {
+      font-size: 11px;
+      color: var(--text-soft);
+      margin-top: 10px;
+      opacity: 0.8;
+    }
+
+    .col-4 { grid-column: span 4 / span 4; }
+    .col-5 { grid-column: span 5 / span 5; }
+    .col-6 { grid-column: span 6 / span 6; }
+    .col-7 { grid-column: span 7 / span 7; }
+    .col-12 { grid-column: span 12 / span 12; }
+  </style>
+</head>
+
+<body>
+<div class="page">
+  <header>
+    <div class="logo-block">
+      <!-- ✔️ TOMMY — TWOJE LOGO -->
+      <img src="Logo czarne_svg.svg"
+     alt="Company Logo"
+     style="
+       height:68px;
+       width:auto;
+       filter: invert(1) brightness(200%);
+       opacity: 0.95;
+     ">
+
+      <div>
+        <h1>McDonald’s Garhoud – FAHU Control Optimization Test</h1>
+        <p class="subtitle">
+          Report prepared by: <strong>Tomasz Szeląg</strong><br>
+          Comparison of HVAC energy performance under EMS FAHU control vs. local FAHU control.
+        </p>
+
+        <div class="tag-row">
+          <span class="tag tag--accent">≈ 40% HVAC Energy Savings (measured)</span>
+          <span class="tag">≈ 36% Weather-normalized</span>
+          <span class="tag">UAE – Garhoud</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Overview & KPIs -->
+    <section class="grid">
+      <article class="card col-7">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Executive Summary</div>
+          </div>
+        </div>
+        <p>
+          The test demonstrates that activating FAHU control from the Energy Management System
+          (EMS) – effectively limiting unnecessary fresh air operation – delivers a substantial
+          reduction in HVAC electricity consumption compared to local FAHU control, while
+          maintaining comfort conditions in the restaurant.
+        </p>
+        <ul class="bullet-list">
+          <li><strong>1,937.6 kWh</strong> total HVAC energy saved per week in measured conditions.</li>
+          <li><strong>≈ 39.7% reduction</strong> in HVAC consumption vs. the week with local FAHU control.</li>
+          <li>
+            After correcting for higher outdoor temperature during the reference week,
+            normalized savings are still about <strong>35.6% (≈ 1,628 kWh/week)</strong>.
+          </li>
+          <li>Indoor temperature remained stable at ~23&nbsp;°C with EMS FAHU control.</li>
+          <li>CO₂ levels stayed low and within comfortable indoor air quality ranges.</li>
+        </ul>
+        <p class="footnote">
+          The reference week with local FAHU control was on average ~2.5&nbsp;°C hotter outside.
+          This naturally increases cooling demand and explains part of the measured savings;
+          even after normalization, EMS-based FAHU control delivers strong energy benefits.
+        </p>
+      </article>
+
+      <aside class="card col-5">
+        <div class="card-header">
+          <div class="card-title">Key Performance Indicators</div>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi">
+            <div class="kpi-label">Weekly savings (measured)</div>
+            <div class="kpi-value">
+              1,937.6<span class="kpi-unit">kWh</span>
+            </div>
+            <div class="kpi-pill">≈ 100 MWh / year</div>
+          </div>
+
+          <div class="kpi">
+            <div class="kpi-label">% HVAC reduction</div>
+            <div class="kpi-value">
+              39.7<span class="kpi-unit">%</span>
+            </div>
+            <div class="kpi-pill">Weather-normalized ≈ 35.6%</div>
+          </div>
+
+          <div class="kpi">
+            <div class="kpi-label">Avg room temperature</div>
+            <div class="kpi-value">
+              23.3<span class="kpi-unit">°C</span>
+            </div>
+            <div class="kpi-pill">Comfort maintained</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Energy Charts -->
+    <section class="grid">
+      <article class="card col-6">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Total HVAC Energy</div>
+            <div class="card-subtitle">Weekly consumption – EMS FAHU control vs. local control</div>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="totalEnergyChart"></canvas>
+        </div>
+      </article>
+
+      <article class="card col-6">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Energy by System</div>
+            <div class="card-subtitle">FAHU and PACUs – weekly kWh</div>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="systemBreakdownChart"></canvas>
+        </div>
+      </article>
+    </section>
+
+    <!-- Comfort Charts -->
+    <section class="grid">
+      <article class="card col-6">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Indoor Air Quality</div>
+            <div class="card-subtitle">Average CO₂ levels – lobby and kitchen</div>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="co2Chart"></canvas>
+        </div>
+        <p class="footnote">
+          Both control strategies remain within very comfortable CO₂ ranges.
+          Theoretically, limiting FAHU operation under EMS control would tend to increase CO₂;
+          the measured differences are small and within normal operational variation.
+        </p>
+      </article>
+
+      <article class="card col-6">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Temperature Conditions</div>
+            <div class="card-subtitle">Room vs. outside temperature</div>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="temperatureChart"></canvas>
+        </div>
+        <p class="footnote">
+          Indoor temperature remained stable at ~23&nbsp;°C for both weeks, confirming that
+          comfort was not compromised when FAHU was controlled by EMS. The reference week
+          with local FAHU control experienced a higher average outdoor temperature
+          (31.7&nbsp;°C vs. 29.2&nbsp;°C), which explains part of the measured savings.
+          After applying a conservative weather adjustment, HVAC savings remain on the
+          order of <strong>35–36%</strong>.
+        </p>
+      </article>
+    </section>
+
+    <!-- Interpretation -->
+    <section class="grid">
+      <article class="card col-12">
+        <div class="card-header">
+          <div class="card-title">Interpretation & Recommendation</div>
+        </div>
+        <p>
+          Activating FAHU control from the EMS significantly reduces the constant fresh-air
+          load compared to local FAHU control without EMS. This eliminates unnecessary FAHU
+          runtime (≈ 1,730 kWh/week) and slightly reduces the energy demand of PACU1 and PACU2.
+          PACU3 shows only a marginal increase, likely related to normal operational
+          variability and load redistribution.
+        </p>
+        <ul class="bullet-list">
+          <li>
+            <strong>Energy:</strong> EMS-based FAHU control is the primary optimization lever
+            at this site, delivering nearly 2 MWh/week of measured savings and still
+            around 1.6 MWh/week after weather normalization.
+          </li>
+          <li>
+            <strong>Comfort:</strong> Indoor air quality and temperature indicators remain
+            within comfortable limits; no deterioration is observed with EMS FAHU control.
+          </li>
+          <li>
+            <strong>Weather impact:</strong> The week with local FAHU control experienced
+            ~2.5&nbsp;°C higher outdoor temperature, naturally driving up cooling demand.
+            Correcting for this effect still leaves a robust <strong>≈ 35.6%</strong> HVAC
+            energy reduction attributable to the control strategy itself.
+          </li>
+          <li>
+            <strong>Scalability:</strong> The results support extending EMS-based FAHU
+            control to other restaurants with similar configuration, with ongoing
+            monitoring of IAQ to confirm performance.
+          </li>
+        </ul>
+      </article>
+    </section>
+  </main>
+</div>
+
+<script>
+  // Data (scenario 1 = EMS FAHU Control, scenario 2 = Local FAHU Control)
+  const totalEnergyEMS = 2943.41;   // EMS-controlled FAHU (12–19.11)
+  const totalEnergyLocal  = 4881.05;   // Local FAHU control (23–30.11)
+
+  const systems = ["FAHU", "PACU1", "PACU2", "PACU3"];
+  const energyEMS = [34.20, 1301.02, 729.48, 878.71];
+  const energyLocal  = [1764.38, 1377.23, 872.47, 866.97];
+
+  const co2Locations = ["Lobby", "Kitchen"];
+  const co2EMS = [441.40, 394.79];  // EMS FAHU control
+  const co2Local  = [419.37, 504.15];  // Local FAHU control
+
+  const temperatureLabels = ["Room", "Outside"];
+  const tempEMS = [23.29, 29.22];   // EMS FAHU control
+  const tempLocal  = [23.18, 31.73];   // Local FAHU control
+
+  const accent = "rgba(34,197,94,0.85)";
+  const accentSoft = "rgba(34,197,94,0.35)";
+  const blue = "rgba(56,189,248,0.85)";
+  const blueSoft = "rgba(56,189,248,0.35)";
+  const slate = "rgba(148,163,184,0.8)";
+  const slateSoft = "rgba(148,163,184,0.35)";
+
+  // Total Energy Chart
+  new Chart(document.getElementById("totalEnergyChart"), {
+    type: "bar",
+    data: {
+      labels: ["EMS FAHU Control (12–19.11)", "Local FAHU Control (23–30.11)"],
+      datasets: [{
+        label: "Weekly HVAC Energy (kWh)",
+        data: [totalEnergyEMS, totalEnergyLocal],
+        backgroundColor: [accentSoft, blueSoft],
+        borderColor: [accent, blue],
+        borderWidth: 2,
+        borderRadius: 8,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => `${ctx.parsed.y.toLocaleString()} kWh`
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: "#e5e7eb", font: { size: 11 } },
+          grid: { display: false }
+        },
+        y: {
+          ticks: {
+            color: "#9ca3af",
+            font: { size: 11 },
+            callback: value => value.toLocaleString()
+          },
+          grid: { color: "rgba(55,65,81,0.6)" },
+          title: {
+            display: true,
+            text: "kWh per week",
+            color: "#9ca3af",
+            font: { size: 11 }
+          }
+        }
+      }
+    }
+  });
+
+  // System Breakdown Chart
+  new Chart(document.getElementById("systemBreakdownChart"), {
+    type: "bar",
+    data: {
+      labels: systems,
+      datasets: [
+        {
+          label: "EMS FAHU Control",
+          data: energyEMS,
+          backgroundColor: accentSoft,
+          borderColor: accent,
+          borderWidth: 2,
+          borderRadius: 6
+        },
+        {
+          label: "Local FAHU Control",
+          data: energyLocal,
+          backgroundColor: blueSoft,
+          borderColor: blue,
+          borderWidth: 2,
+          borderRadius: 6
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          labels: { color: "#e5e7eb", font: { size: 11 } }
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString()} kWh`
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: "#e5e7eb", font: { size: 11 } },
+          grid: { display: false }
+        },
+        y: {
+          ticks: {
+            color: "#9ca3af",
+            font: { size: 11 },
+            callback: value => value.toLocaleString()
+          },
+          grid: { color: "rgba(55,65,81,0.6)" },
+          title: {
+            display: true,
+            text: "kWh per week",
+            color: "#9ca3af",
+            font: { size: 11 }
+          }
+        }
+      }
+    }
+  });
+
+  // CO₂ Chart
+  new Chart(document.getElementById("co2Chart"), {
+    type: "bar",
+    data: {
+      labels: co2Locations,
+      datasets: [
+        {
+          label: "EMS FAHU Control",
+          data: co2EMS,
+          backgroundColor: accentSoft,
+          borderColor: accent,
+          borderWidth: 2,
+          borderRadius: 6
+        },
+        {
+          label: "Local FAHU Control",
+          data: co2Local,
+          backgroundColor: slateSoft,
+          borderColor: slate,
+          borderWidth: 2,
+          borderRadius: 6
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          labels: { color: "#e5e7eb", font: { size: 11 } }
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(0)} ppm`
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: "#e5e7eb", font: { size: 11 } },
+          grid: { display: false }
+        },
+        y: {
+          ticks: {
+            color: "#9ca3af",
+            font: { size: 11 },
+            callback: value => value + " ppm"
+          },
+          grid: { color: "rgba(55,65,81,0.6)" },
+          title: {
+            display: true,
+            text: "Average CO₂ [ppm]",
+            color: "#9ca3af",
+            font: { size: 11 }
+          }
+        }
+      }
+    }
+  });
+
+  // Temperature Chart
+  new Chart(document.getElementById("temperatureChart"), {
+    type: "bar",
+    data: {
+      labels: temperatureLabels,
+      datasets: [
+        {
+          label: "EMS FAHU Control",
+          data: tempEMS,
+          backgroundColor: accentSoft,
+          borderColor: accent,
+          borderWidth: 2,
+          borderRadius: 6
+        },
+        {
+          label: "Local FAHU Control",
+          data: tempLocal,
+          backgroundColor: blueSoft,
+          borderColor: blue,
+          borderWidth: 2,
+          borderRadius: 6
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          labels: {
+            color: "#e5e7eb",
+            font: { size: 11 }
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)} °C`
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: "#e5e7eb", font: { size: 11 } },
+          grid: { display: false }
+        },
+        y: {
+          ticks: {
+            color: "#9ca3af",
+            font: { size: 11 },
+            callback: value => value + " °C"
+          },
+          grid: { color: "rgba(55,65,81,0.6)" },
+          title: {
+            display: true,
+            text: "Average temperature [°C]",
+            color: "#9ca3af",
+            font: { size: 11 }
+          }
+        }
+      }
+    }
+  });
+</script>
+</body>
+</html>
